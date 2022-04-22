@@ -8,9 +8,8 @@ import tensorflow_transform as tft
 # avoid this problem during development, reload the file.
 import vitals_constants
 import sys
-if 'google.colab' in sys.modules:  # Testing to see if we're doing development
-  import importlib
-  importlib.reload(vitals_constants)
+import importlib
+importlib.reload(vitals_constants)
 
 _NUMERICAL_FEATURES = vitals_constants.NUMERICAL_FEATURES
 _LABEL_KEY = vitals_constants.LABEL_KEY
@@ -49,13 +48,6 @@ def preprocessing_fn(inputs):
     outputs[vitals_constants.t_name(key)] = tft.scale_to_z_score(
         _fill_in_missing(inputs[key]), name=key)
 
-  # Was this passenger a big tipper?
-  septic = _fill_in_missing(inputs[_LABEL_KEY])
-  #outputs[_LABEL_KEY] = tf.where(
-  #    tf.math.is_nan(taxi_fare),
-  #    tf.cast(tf.zeros_like(taxi_fare), tf.int64),
-  #    # Test if the tip was > 20% of the fare.
-  #    tf.cast(
-  #        tf.greater(tips, tf.multiply(taxi_fare, tf.constant(0.2))), tf.int64))
-
+  outputs[_LABEL_KEY] = _fill_in_missing(inputs[_LABEL_KEY]) 
+    
   return outputs
