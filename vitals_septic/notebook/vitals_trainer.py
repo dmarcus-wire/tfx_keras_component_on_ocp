@@ -13,7 +13,7 @@ from tfx import v1 as tfx
 from tfx_bsl.public import tfxio
 from tensorflow_transform import TFTransformOutput
 
-# Imported files such as taxi_constants are normally cached, so changes are
+# Imported files such as vitals_constants are normally cached, so changes are
 # not honored after the first import.  Normally this is good for efficiency, but
 # during development when we may be iterating code it can be a problem. To
 # avoid this problem during development, reload the file.
@@ -120,7 +120,7 @@ def export_serving_model(tf_transform_output, model, output_dir):
 
 def _build_keras_model(tf_transform_output: TFTransformOutput
                        ) -> tf.keras.Model:
-  """Creates a DNN Keras model for classifying taxi data.
+  """Creates a DNN Keras model for classifying vitals data.
 
   Args:
     tf_transform_output: [TFTransformOutput], the outputs from Transform
